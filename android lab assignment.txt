@@ -1,0 +1,3464 @@
+Q1.Create an android app to demonstrate Activity Life Cycle
+Java code
+package com.example.lifecycleapp;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "ActivityLifecycle";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate called");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart called");
+    }
+
+    @Override
+     protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+xml code
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Life Cycle"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Q2.Create an android app to demonstrate Fragment Lifecycle.
+Java code
+DemoFragment.java
+package com.example.fragmentlifecycleapp;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public class DemoFragment extends Fragment {
+
+    private static final String TAG = "FragmentLifecycle";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate called");
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView called");
+        return inflater.inflate(R.layout.fragment_demo, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart called");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause called");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView called");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+}
+
+xml code
+fragment_demo.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DemoFragment">
+
+    <TextView
+        android:id="@+id/fragmentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fragment Life Cycle"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+java code
+Update the MainActivity to Load the Fragment(MainActivity.java)
+package com.example.fragmentlifecycleapp;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Add fragment to the activity
+        if (savedInstanceState == null) {
+            DemoFragment fragment = new DemoFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+    }
+}
+
+xml code
+Create the Main Activity Layout (activity_main.xml)
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Q3.Using Fragments, design login screen and registration form (take any example)
+
+1. LoginFragment
+XML layout (fragment_login.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/loginEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/registerLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Register"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+</LinearLayout>
+
+Java Code for LoginFragment (LoginFragment.java):
+public class LoginFragment extends Fragment {
+
+    private EditText email, password;
+    private Button loginButton;
+    private TextView registerLink;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        email = view.findViewById(R.id.loginEmail);
+        password = view.findViewById(R.id.loginPassword);
+        loginButton = view.findViewById(R.id.btnLogin);
+        registerLink = view.findViewById(R.id.registerLink);
+
+        // Handle login button click
+        loginButton.setOnClickListener(v -> {
+            String userEmail = email.getText().toString().trim();
+            String userPassword = password.getText().toString().trim();
+            // Implement login logic
+        });
+
+        // Navigate to registration
+        registerLink.setOnClickListener(v -> {
+            // Replace LoginFragment with RegistrationFragment
+            getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new RegistrationFragment())
+                .addToBackStack(null)
+                .commit();
+        });
+
+        return view;
+    }
+}
+2. RegistrationFragment
+XML layout (fragment_registration.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/registrationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/registerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:padding="10dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/registerConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/loginLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+</LinearLayout>
+
+Java Code for RegistrationFragment (RegistrationFragment.java):
+public class RegistrationFragment extends Fragment {
+
+    private EditText name, email, password, confirmPassword;
+    private Button registerButton;
+    private TextView loginLink;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_registration, container, false);
+
+        name = view.findViewById(R.id.registerName);
+        email = view.findViewById(R.id.registerEmail);
+        password = view.findViewById(R.id.registerPassword);
+        confirmPassword = view.findViewById(R.id.registerConfirmPassword);
+        registerButton = view.findViewById(R.id.btnRegister);
+        loginLink = view.findViewById(R.id.loginLink);
+
+        // Handle register button click
+        registerButton.setOnClickListener(v -> {
+            String userName = name.getText().toString().trim();
+            String userEmail = email.getText().toString().trim();
+            String userPassword = password.getText().toString().trim();
+            String userConfirmPassword = confirmPassword.getText().toString().trim();
+            // Implement registration logic
+        });
+
+        // Navigate to login
+        loginLink.setOnClickListener(v -> {
+            // Replace RegistrationFragment with LoginFragment
+            getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new LoginFragment())
+                .addToBackStack(null)
+                .commit();
+        });
+
+        return view;
+    }
+}
+3. MainActivity.java
+java code
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new LoginFragment())
+                .commit();
+        }
+    }
+}
+4. Main Layout (activity_main.xml)
+xml code
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+Q4.Develop Android app to display Home Screen with 3 buttons to call respective
+Shape activities using explicit intents
+
+1. MainActivity (Home Screen with Buttons)
+XML layout (activity_main.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Circle"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnSquare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Square"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnTriangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Triangle"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+MainActivity.java:
+public class MainActivity extends AppCompatActivity {
+
+    private Button btnCircle, btnSquare, btnTriangle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btnCircle = findViewById(R.id.btnCircle);
+        btnSquare = findViewById(R.id.btnSquare);
+        btnTriangle = findViewById(R.id.btnTriangle);
+
+        // Open CircleActivity when Circle button is clicked
+        btnCircle.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CircleActivity.class);
+            startActivity(intent);
+        });
+
+        // Open SquareActivity when Square button is clicked
+        btnSquare.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SquareActivity.class);
+            startActivity(intent);
+        });
+
+        // Open TriangleActivity when Triangle button is clicked
+        btnTriangle.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TriangleActivity.class);
+            startActivity(intent);
+        });
+    }
+}
+
+2. CircleActivity
+XML layout (activity_circle.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/circle_shape"/>
+</LinearLayout>
+
+CircleActivity.java:
+public class CircleActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_circle);
+    }
+}
+Drawable for Circle (res/drawable/circle_shape.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FF4081"/>
+</shape>
+
+3. SquareActivity
+XML layout (activity_square.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/square_shape"/>
+</LinearLayout>
+
+SquareActivity.java:
+public class SquareActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_square);
+    }
+}
+
+Drawable for Square (res/drawable/square_shape.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#3F51B5"/>
+</shape>
+
+4. TriangleActivity
+XML layout (activity_triangle.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/triangle_shape"/>
+</LinearLayout>
+
+TriangleActivity.java:
+public class TriangleActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_triangle);
+    }
+}
+
+Drawable for Triangle (res/drawable/triangle_shape.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="polygon"
+    android:useLevel="true">
+    <stroke android:width="1dp" android:color="#000000"/>
+    <solid android:color="#FF5722"/>
+    <path android:fillType="evenOdd"
+        android:pathData="M100,0 L200,200 L0,200 Z"/>
+</shape>
+
+5. AndroidManifest.xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shapesapp">
+
+    <application
+        android:allowBackup="true"
+        android:label="ShapesApp"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light">
+        
+        <activity android:name=".TriangleActivity"></activity>
+        <activity android:name=".SquareActivity"></activity>
+        <activity android:name=".CircleActivity"></activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+Q5.Develop Android app by using Relative Layout to capture date and time using
+both dialog classes and using views (DatePicker and TimePicker)
+
+xml code
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/dateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateTextView"
+        android:layout_marginTop="16dp"
+        android:text="Choose Date" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateButton"
+        android:layout_marginTop="32dp"
+        android:text="Select Time"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/timeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timeTextView"
+        android:layout_marginTop="16dp"
+        android:text="Choose Time" />
+
+</RelativeLayout>
+
+java code
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView dateTextView;
+    private TextView timeTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        dateTextView = findViewById(R.id.dateTextView);
+        timeTextView = findViewById(R.id.timeTextView);
+        Button dateButton = findViewById(R.id.dateButton);
+        Button timeButton = findViewById(R.id.timeButton);
+
+        // Set date picker dialog
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+                        (view, selectedYear, selectedMonth, selectedDay) -> {
+                            String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                            dateTextView.setText(date);
+                        }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        // Set time picker dialog
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
+                        (view, selectedHour, selectedMinute) -> {
+                            String time = selectedHour + ":" + String.format("%02d", selectedMinute);
+                            timeTextView.setText(time);
+                        }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+    }
+}
+
+Q6.Using options menu, create design for courses conducted by SPPU
+
+xml code:activity_main.xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/courseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a course from the options menu"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"/>
+    
+</RelativeLayout>
+
+xml code:menu_main.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/course_cs"
+        android:title="Computer Science"/>
+    <item
+        android:id="@+id/course_it"
+        android:title="Information Technology"/>
+    <item
+        android:id="@+id/course_electronics"
+        android:title="Electronics"/>
+    <item
+        android:id="@+id/course_mech"
+        android:title="Mechanical Engineering"/>
+    <item
+        android:id="@+id/course_civil"
+        android:title="Civil Engineering"/>
+</menu>
+
+java code
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView courseTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        courseTextView = findViewById(R.id.courseTextView);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.course_cs:
+                courseTextView.setText("Computer Science");
+                return true;
+            case R.id.course_it:
+                courseTextView.setText("Information Technology");
+                return true;
+            case R.id.course_electronics:
+                courseTextView.setText("Electronics");
+                return true;
+            case R.id.course_mech:
+                courseTextView.setText("Mechanical Engineering");
+                return true;
+            case R.id.course_civil:
+                courseTextView.setText("Civil Engineering");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+}
+
+Q7.Using context menu display cut copy paste select all italic bold etc. as menu
+items
+
+xml code:activity_main.xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="Long press for context menu"
+        android:textSize="18sp"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:minHeight="100dp" />
+    
+</RelativeLayout>
+
+xml code:menu_context.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_cut"
+        android:title="Cut" />
+    <item
+        android:id="@+id/action_copy"
+        android:title="Copy" />
+    <item
+        android:id="@+id/action_paste"
+        android:title="Paste" />
+    <item
+        android:id="@+id/action_select_all"
+        android:title="Select All" />
+    <item
+        android:id="@+id/action_bold"
+        android:title="Bold" />
+    <item
+        android:id="@+id/action_italic"
+        android:title="Italic" />
+</menu>
+
+java code:MainActivity.java
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.text.ClipboardManager;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editText;
+    private ClipboardManager clipboardManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+        // Registering the EditText for context menu
+        registerForContextMenu(editText);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cut:
+                editText.cut();
+                return true;
+            case R.id.action_copy:
+                editText.copy();
+                return true;
+            case R.id.action_paste:
+                editText.paste();
+                return true;
+            case R.id.action_select_all:
+                editText.selectAll();
+                return true;
+            case R.id.action_bold:
+                editText.setTypeface(null, Typeface.BOLD);
+                return true;
+            case R.id.action_italic:
+                editText.setTypeface(null, Typeface.ITALIC);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+}
+
+Q8.Using popup menu display various types of Coffee, like Americano, Latte,
+Espresso, Cappucino, Mocha, Skinny Latte, Espresso Corretto. (use images with
+type)
+
+xml code:activity_main.xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/coffeeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Coffee"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:id="@+id/coffeeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/coffeeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:contentDescription="Coffee Image" />
+
+</RelativeLayout>
+
+xml code:menu_coffee.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/americano"
+        android:title="Americano" />
+    <item
+        android:id="@+id/latte"
+        android:title="Latte" />
+    <item
+        android:id="@+id/espresso"
+        android:title="Espresso" />
+    <item
+        android:id="@+id/cappuccino"
+        android:title="Cappuccino" />
+    <item
+        android:id="@+id/mocha"
+        android:title="Mocha" />
+    <item
+        android:id="@+id/skinny_latte"
+        android:title="Skinny Latte" />
+    <item
+        android:id="@+id/espresso_corretto"
+        android:title="Espresso Corretto" />
+</menu>
+
+java code:MainActivity.java
+import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ImageView coffeeImageView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button coffeeButton = findViewById(R.id.coffeeButton);
+        coffeeImageView = findViewById(R.id.coffeeImageView);
+
+        coffeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(view);
+            }
+        });
+    }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.menu_coffee, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.americano:
+                        coffeeImageView.setImageResource(R.drawable.americano);
+                        return true;
+                    case R.id.latte:
+                        coffeeImageView.setImageResource(R.drawable.latte);
+                        return true;
+                    case R.id.espresso:
+                        coffeeImageView.setImageResource(R.drawable.espresso);
+                        return true;
+                    case R.id.cappuccino:
+                        coffeeImageView.setImageResource(R.drawable.cappuccino);
+                        return true;
+                    case R.id.mocha:
+                        coffeeImageView.setImageResource(R.drawable.mocha);
+                        return true;
+                    case R.id.skinny_latte:
+                        coffeeImageView.setImageResource(R.drawable.skinny_latte);
+                        return true;
+                    case R.id.espresso_corretto:
+                        coffeeImageView.setImageResource(R.drawable.espresso_corretto);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+}
+
+Q9.Using AlertDialog class create app to display “Do you want to close this
+application? If user clicks on Yes, close the app and if user clicks No, display
+“Continue with the same app” message
+
+xml code:activity_main.xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit Application"
+        android:layout_centerInParent="true"/>
+    
+</RelativeLayout>
+
+java code:MainActivity.java
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button exitButton = findViewById(R.id.exitButton);
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showExitDialog();
+            }
+        });
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit Application");
+        builder.setMessage("Do you want to close this application?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish(); // Close the app
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Continue with the same app", Toast.LENGTH_SHORT).show();
+                dialog.dismiss(); // Dismiss the dialog and show a message
+            }
+        });
+        builder.show();
+    }
+}
+
+Q10.Write an app demonstrating Spinner, checkbox, Radio Button, Switch,
+ToggleButton.
+
+xml code:activity_main.xml
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose a Language:"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/languageSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- CheckBox -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Your Hobbies:"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+        <CheckBox
+            android:id="@+id/readingCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading" />
+
+        <CheckBox
+            android:id="@+id/sportsCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sports" />
+
+        <CheckBox
+            android:id="@+id/travelCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travel" />
+
+        <!-- RadioGroup for RadioButtons -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender:"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/genderRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/maleRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/femaleRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+        </RadioGroup>
+
+        <!-- Switch -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receive Notifications:"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+        <Switch
+            android:id="@+id/notificationSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- ToggleButton -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Dark Mode:"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+        <ToggleButton
+            android:id="@+id/darkModeToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>
+
+java code:MainActivity.java
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+import android.widget.ArrayAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Spinner languageSpinner;
+    private CheckBox readingCheckBox, sportsCheckBox, travelCheckBox;
+    private RadioGroup genderRadioGroup;
+    private Switch notificationSwitch;
+    private ToggleButton darkModeToggle;
+    private Button submitButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI components
+        languageSpinner = findViewById(R.id.languageSpinner);
+        readingCheckBox = findViewById(R.id.readingCheckBox);
+        sportsCheckBox = findViewById(R.id.sportsCheckBox);
+        travelCheckBox = findViewById(R.id.travelCheckBox);
+        genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        notificationSwitch = findViewById(R.id.notificationSwitch);
+        darkModeToggle = findViewById(R.id.darkModeToggle);
+        submitButton = findViewById(R.id.submitButton);
+
+        // Set up Spinner with values
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.languages_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(adapter);
+
+        // Handle submit button click
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder result = new StringBuilder();
+
+                // Get Spinner selection
+                String selectedLanguage = languageSpinner.getSelectedItem().toString();
+                result.append("Language: ").append(selectedLanguage).append("\n");
+
+                // Get CheckBox selections
+                result.append("Hobbies: ");
+                if (readingCheckBox.isChecked()) result.append("Reading ");
+                if (sportsCheckBox.isChecked()) result.append("Sports ");
+                if (travelCheckBox.isChecked()) result.append("Travel ");
+                result.append("\n");
+
+                // Get RadioButton selection
+                int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
+                RadioButton selectedGenderRadioButton = findViewById(selectedGenderId);
+                result.append("Gender: ").append(selectedGenderRadioButton.getText()).append("\n");
+
+                // Get Switch state
+                result.append("Notifications: ").append(notificationSwitch.isChecked() ? "On" : "Off").append("\n");
+
+                // Get ToggleButton state
+                result.append("Dark Mode: ").append(darkModeToggle.isChecked() ? "Enabled" : "Disabled").append("\n");
+
+                // Display the result
+                Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+}
+
+11.Write an app demonstrating Seek bar and Progress Bar
+
+xml code:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp" />
+
+    <!-- SeekBar -->
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp" />
+
+    <!-- TextView for Progress Percentage -->
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress: 0%"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+java code:
+package com.example.seekbarandprogressbarapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Declare Views
+    private ProgressBar progressBar;
+    private SeekBar seekBar;
+    private TextView tvProgress;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize Views
+        progressBar = findViewById(R.id.progressBar);
+        seekBar = findViewById(R.id.seekBar);
+        tvProgress = findViewById(R.id.tvProgress);
+
+        // Set SeekBar Change Listener
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Update the ProgressBar's progress
+                progressBar.setProgress(progress);
+
+                // Update the TextView with current progress
+                tvProgress.setText("Progress: " + progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // You can handle logic when the user starts dragging the SeekBar thumb
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // You can handle logic when the user stops dragging the SeekBar thumb
+            }
+        });
+    }
+}
+
+Q12. Create a rating bar application, where user will rate a service provided by
+Swigatto (Online Food Service app) using Linear Layout
+
+xml code:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#FFF1E1">
+
+    <!-- Swigatto Service Rating Text -->
+    <TextView
+        android:id="@+id/tvService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate Swigatto Service"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:textColor="#333333"/>
+
+    <!-- Rating Bar for rating service -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:rating="0"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Submit Rating Button -->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Rating"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF5722"/>
+
+    <!-- TextView to display the result -->
+    <TextView
+        android:id="@+id/tvRatingResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Rating: 0"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:textColor="#333333"/>
+
+</LinearLayout>
+
+java code:
+package com.example.swigattoratingapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private RatingBar ratingBar;
+    private Button btnSubmit;
+    private TextView tvRatingResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize the Views
+        ratingBar = findViewById(R.id.ratingBar);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        tvRatingResult = findViewById(R.id.tvRatingResult);
+
+        // Set up button click listener to capture the rating
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the rating from RatingBar
+                float ratingValue = ratingBar.getRating();
+
+                // Display the rating in TextView
+                tvRatingResult.setText("Your Rating: " + ratingValue);
+
+                // Display a toast message
+                Toast.makeText(MainActivity.this, "You rated Swigatto " + ratingValue + " stars!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+
+Q13.Develop Android app to demonstrate calculator using Gridview/ or GridLayout
+
+xml code:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#E0E0E0">
+
+    <!-- Display Screen for Calculator -->
+    <TextView
+        android:id="@+id/display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:gravity="end"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
+        android:padding="16dp"
+        android:text="0"/>
+
+    <!-- GridLayout for the calculator buttons -->
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:rowCount="5"
+        android:columnCount="4">
+
+        <!-- Calculator Buttons -->
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btnDivide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btnMultiply"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="*"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btnSubtract"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btn0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:textSize="24sp"
+            android:layout_gravity="fill"
+            android:layout_columnSpan="2"/>
+
+        <Button
+            android:id="@+id/btnEquals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="="
+            android:layout_row="4"
+            android:layout_column="2"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:textSize="24sp"
+            android:layout_gravity="fill"/>
+
+    </GridLayout>
+</LinearLayout>
+
+java code:
+package com.example.calculatorapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView display;
+    private String input = "";
+    private String operator = "";
+    private double firstNumber = 0;
+    private boolean isOperatorPressed = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        display = findViewById(R.id.display);
+
+        setNumberButtonClickListeners();
+        setOperatorButtonClickListeners();
+    }
+
+    private void setNumberButtonClickListeners() {
+        int[] numberButtonIds = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
+
+        for (int id : numberButtonIds) {
+            Button numberButton = findViewById(id);
+            numberButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isOperatorPressed) {
+                        input = "";
+                        isOperatorPressed = false;
+                    }
+                    input += ((Button) v).getText().toString();
+                    display.setText(input);
+                }
+            });
+        }
+    }
+
+    private void setOperatorButtonClickListeners() {
+        int[] operatorButtonIds = {R.id.btnAdd, R.id.btnSubtract, R.id.btnMultiply, R.id.btnDivide};
+
+        for (int id : operatorButtonIds) {
+            Button operatorButton = findViewById(id);
+            operatorButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    operator = ((Button) v).getText().toString();
+                    firstNumber = Double.parseDouble(input);
+                    isOperatorPressed = true;
+                }
+            });
+        }
+
+        Button equalsButton = findViewById(R.id.btnEquals);
+        equalsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double secondNumber = Double.parseDouble(input);
+                double result = 0;
+
+                switch (operator) {
+                    case "+":
+                        result = firstNumber + secondNumber;
+                        break;
+                    case "-":
+                        result = firstNumber - secondNumber;
+                        break;
+                    case "*":
+                        result = firstNumber * secondNumber;
+                        break;
+                    case "/":
+                        result = firstNumber / secondNumber;
+                        break;
+                }
+
+                display.setText(String.valueOf(result));
+                input = String.valueOf(result);
+                operator = "";
+            }
+        });
+    }
+}
+
+Q14.Create Mobile app by using Custom ListVew & Custom Adapter. Display Main
+title (Name or Number), Subtitle (Latest message), image at left side, time at
+right side in a list (Like Home screen/ Initial Page in WhatsApp)
+
+xml code:list_item.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Profile Image on the left -->
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_profile" />
+
+    <!-- Main Title (Name or Number) -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgProfile"
+        android:layout_marginStart="16dp"
+        android:text="Name or Number"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000" />
+
+    <!-- Latest Message (Subtitle) -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_toEndOf="@id/imgProfile"
+        android:layout_marginStart="16dp"
+        android:text="Latest message"
+        android:textSize="14sp"
+        android:textColor="#808080" />
+
+    <!-- Time (on the right side) -->
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tvTitle"
+        android:text="10:30 AM"
+        android:textSize="12sp"
+        android:textColor="#808080" />
+
+</RelativeLayout>
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- ListView to display the chats -->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+
+java code:
+package com.example.whatsaphomeclone;
+
+public class ChatItem {
+    private String title;
+    private String subtitle;
+    private String time;
+    private int imageResource;
+
+    public ChatItem(String title, String subtitle, String time, int imageResource) {
+        this.title = title;
+        this.subtitle = subtitle;
+        this.time = time;
+        this.imageResource = imageResource;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public int getImageResource() {
+        return imageResource;
+    }
+}
+
+Q15.Use WebView and display web page in app
+
+xml code:AndroidManifest.xml
+<uses-permission android:name="android.permission.INTERNET"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.webviewapp">
+
+    <!-- Request internet permission -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WebViewApp">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- WebView to display the webpage -->
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+java code:
+package com.example.webviewapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class MainActivity extends AppCompatActivity {
+
+    private WebView webView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Find the WebView by ID
+        webView = findViewById(R.id.webview);
+
+        // Enable JavaScript
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        // Force links and redirects to open in the WebView instead of a browser
+        webView.setWebViewClient(new WebViewClient());
+
+        // Load a webpage
+        webView.loadUrl("https://www.google.com");
+    }
+
+    // Handle the back button to go back in WebView history
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+}
+
+Q16.Create Video Player app using VideoView
+
+xml code:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- VideoView to display the video -->
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center"/>
+
+    <!-- Button to play the video -->
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Play Video" />
+
+</LinearLayout>
+
+java code:
+package com.example.videoplayerapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.VideoView;
+import android.widget.MediaController;
+
+public class MainActivity extends AppCompatActivity {
+
+    private VideoView videoView;
+    private Button playButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Find the VideoView and Button by their IDs
+        videoView = findViewById(R.id.videoView);
+        playButton = findViewById(R.id.playButton);
+
+        // Set up the MediaController (for play/pause controls)
+        MediaController mediaController = new MediaController(this);
+        mediaController.setAnchorView(videoView);
+        videoView.setMediaController(mediaController);
+
+        // Local video file from raw folder
+        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sample_video);
+
+        // For a video from the internet, use the URL
+        // Uri videoUri = Uri.parse("https://www.example.com/sample_video.mp4");
+
+        // Set video URI to the VideoView
+        videoView.setVideoURI(videoUri);
+
+        // Play the video when the button is clicked
+        playButton.setOnClickListener(v -> {
+            videoView.start(); // Start the video
+        });
+    }
+}
+
+Q17.Create an app to insert, modify, delete and display (CRUD Operations) students
+details using SQLite Database. (Assume suitable structure)
+
+java code:DBHelper.java
+package com.example.studentcrudapp;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DBHelper extends SQLiteOpenHelper {
+
+    // Database name and version
+    private static final String DATABASE_NAME = "studentDB";
+    private static final int DATABASE_VERSION = 1;
+
+    // Table name
+    private static final String TABLE_NAME = "students";
+
+    // Table columns
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_AGE = "age";
+    private static final String COLUMN_GRADE = "grade";
+
+    public DBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        // Create table
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_NAME + " TEXT, " +
+                COLUMN_AGE + " INTEGER, " +
+                COLUMN_GRADE + " TEXT)";
+        db.execSQL(createTable);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Drop older table if exists
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+    // Insert student record
+    public boolean insertStudent(String name, int age, String grade) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_AGE, age);
+        contentValues.put(COLUMN_GRADE, grade);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        return result != -1; // If result is -1, insertion failed
+    }
+
+    // Update student record
+    public boolean updateStudent(int id, String name, int age, String grade) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_AGE, age);
+        contentValues.put(COLUMN_GRADE, grade);
+        int result = db.update(TABLE_NAME, contentValues, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+        return result > 0; // Returns the number of rows affected
+    }
+
+    // Delete student record
+    public boolean deleteStudent(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(TABLE_NAME, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+        return result > 0;
+    }
+
+    // Get all student records
+    public Cursor getAllStudents() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+    }
+}
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Student Name Input -->
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Student Name" />
+
+    <!-- Student Age Input -->
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Age"
+        android:inputType="number" />
+
+    <!-- Student Grade Input -->
+    <EditText
+        android:id="@+id/etGrade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Grade" />
+
+    <!-- Student ID (Hidden for Updates/Deletions) -->
+    <EditText
+        android:id="@+id/etId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Student ID (for update/delete)"
+        android:visibility="gone" />
+
+    <!-- Buttons for CRUD operations -->
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Student" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Student" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Student" />
+
+    <Button
+        android:id="@+id/btnViewAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View All Students" />
+
+    <!-- TextView to display student data -->
+    <TextView
+        android:id="@+id/tvResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Results will appear here"
+        android:textSize="16sp" />
+</LinearLayout>
+
+java code:MainActivity.java
+package com.example.studentcrudapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etName, etAge, etGrade, etId;
+    private Button btnAdd, btnUpdate, btnDelete, btnViewAll;
+    private TextView tvResults;
+    private DBHelper dbHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        etName = findViewById(R.id.etName);
+        etAge = findViewById(R.id.etAge);
+        etGrade = findViewById(R.id.etGrade);
+        etId = findViewById(R.id.etId);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
+        btnViewAll = findViewById(R.id.btnViewAll);
+        tvResults = findViewById(R.id.tvResults);
+
+        // Initialize the DBHelper
+        dbHelper = new DBHelper(this);
+
+        // Add student
+        btnAdd.setOnClickListener(v -> {
+            String name = etName.getText().toString();
+            int age = Integer.parseInt(etAge.getText().toString());
+            String grade = etGrade.getText().toString();
+
+            boolean isInserted = dbHelper.insertStudent(name, age, grade);
+            if (isInserted) {
+                Toast.makeText(MainActivity.this, "Student added successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Failed to add student", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Update student
+        btnUpdate.setOnClickListener(v -> {
+            int id = Integer.parseInt(etId.getText().toString());
+            String name = etName.getText().toString();
+            int age = Integer.parseInt(etAge.getText().toString());
+            String grade = etGrade.getText().toString();
+
+            boolean isUpdated = dbHelper.updateStudent(id, name, age, grade);
+            if (isUpdated) {
+                Toast.makeText(MainActivity.this, "Student updated successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Failed to update student", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Delete student
+        btnDelete.setOnClickListener(v -> {
+            int id = Integer.parseInt(etId.getText().toString());
+            boolean isDeleted = dbHelper.deleteStudent(id);
+            if (isDeleted) {
+                Toast.makeText(MainActivity.this, "Student deleted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Failed to delete student", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // View all students
+        btnViewAll.setOnClickListener(v -> {
+            Cursor cursor = dbHelper.getAllStudents();
+            if (cursor.getCount() == 0) {
+                tvResults.setText("No student records found.");
+                return;
+            }
+
+            StringBuilder result = new StringBuilder();
+            while (cursor.moveToNext()) {
+                result.append("ID: ").append(cursor.getInt(0)).append("\n");
+                result.append("Name: ").append(cursor.getString(1)).append("\n");
+                result.append("Age: ").append(cursor.getInt(2)).append("\n");
+                result.append("Grade: ").append(cursor.getString(3)).append("\n\n");
+            }
+
+            tvResults.setText(result.toString());
+        });
+    }
+}
+
+Q18.Write firebase code for taking appointment in hospital. Consider suitable details
+of patient. After successful registration, the patient will get an appointment id.
+
+project-level build.gradle
+buildscript {
+    dependencies {
+        // Add the Google services classpath
+        classpath 'com.google.gms:google-services:4.3.15'
+    }
+}
+
+app-level build.gradle
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services' // Add this line
+}
+
+android {
+    // Your existing configuration
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.7.1' // Firestore dependency
+    implementation 'com.google.firebase:firebase-auth-ktx:24.6.0' // Firebase Auth for user management (optional)
+    // Other dependencies
+}
+
+java code:Appointment.java
+package com.example.hospitalappointment;
+
+public class Appointment {
+    private String appointmentId;
+    private String patientName;
+    private String patientContact;
+    private String appointmentDate;
+    private String appointmentTime;
+
+    // Default constructor required for Firestore
+    public Appointment() {}
+
+    public Appointment(String appointmentId, String patientName, String patientContact, String appointmentDate, String appointmentTime) {
+        this.appointmentId = appointmentId;
+        this.patientName = patientName;
+        this.patientContact = patientContact;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+    }
+
+    // Getters and Setters
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientContact() {
+        return patientContact;
+    }
+
+    public void setPatientContact(String patientContact) {
+        this.patientContact = patientContact;
+    }
+
+    public String getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(String appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public String getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public void setAppointmentTime(String appointmentTime) {
+        this.appointmentTime = appointmentTime;
+    }
+}
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etPatientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Patient Name" />
+
+    <EditText
+        android:id="@+id/etPatientContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number" />
+
+    <EditText
+        android:id="@+id/etAppointmentDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Appointment Date (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/etAppointmentTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Appointment Time (HH:MM)" />
+
+    <Button
+        android:id="@+id/btnBookAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Book Appointment" />
+
+    <TextView
+        android:id="@+id/tvAppointmentId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Appointment ID will appear here"
+        android:textSize="16sp" />
+</LinearLayout>
+
+java code:MainActivity.java
+package com.example.hospitalappointment;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etPatientName, etPatientContact, etAppointmentDate, etAppointmentTime;
+    private Button btnBookAppointment;
+    private TextView tvAppointmentId;
+
+    private FirebaseFirestore db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize Firebase Firestore
+        db = FirebaseFirestore.getInstance();
+
+        // Initialize UI components
+        etPatientName = findViewById(R.id.etPatientName);
+        etPatientContact = findViewById(R.id.etPatientContact);
+        etAppointmentDate = findViewById(R.id.etAppointmentDate);
+        etAppointmentTime = findViewById(R.id.etAppointmentTime);
+        btnBookAppointment = findViewById(R.id.btnBookAppointment);
+        tvAppointmentId = findViewById(R.id.tvAppointmentId);
+
+        // Set click listener for booking appointment
+        btnBookAppointment.setOnClickListener(v -> bookAppointment());
+    }
+
+    private void bookAppointment() {
+        // Get input values
+        String patientName = etPatientName.getText().toString().trim();
+        String patientContact = etPatientContact.getText().toString().trim();
+        String appointmentDate = etAppointmentDate.getText().toString().trim();
+        String appointmentTime = etAppointmentTime.getText().toString().trim();
+
+        // Validate inputs
+        if (patientName.isEmpty() || patientContact.isEmpty() || appointmentDate.isEmpty() || appointmentTime.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create a new appointment
+        Appointment appointment = new Appointment();
+        appointment.setPatientName(patientName);
+        appointment.setPatientContact(patientContact);
+        appointment.setAppointmentDate(appointmentDate);
+        appointment.setAppointmentTime(appointmentTime);
+
+        // Add appointment to Firestore
+        db.collection("appointments")
+                .add(appointment)
+                .addOnSuccessListener(documentReference -> {
+                    String appointmentId = documentReference.getId();
+                    appointment.setAppointmentId(appointmentId);
+                    tvAppointmentId.setText("Appointment ID: " + appointmentId);
+                    Toast.makeText(MainActivity.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> Log.w("MainActivity", "Error adding document", e));
+    }
+}
+
+Q19.Using firebase, create database operations for employee Database
+
+project-level build.gradle:
+buildscript {
+    dependencies {
+        // Add the Google services classpath
+        classpath 'com.google.gms:google-services:4.3.15'
+    }
+}
+
+app-level build.gradle:
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services' // Add this line
+}
+
+android {
+    // Your existing configuration
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.7.1' // Firestore dependency
+    // Other dependencies
+}
+
+java code:Employee.java
+package com.example.employeedatabase;
+
+public class Employee {
+    private String employeeId;
+    private String name;
+    private String position;
+    private String department;
+
+    // Default constructor required for Firestore
+    public Employee() {}
+
+    public Employee(String employeeId, String name, String position, String department) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.position = position;
+        this.department = department;
+    }
+
+    // Getters and Setters
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+}
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etEmployeeId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Employee ID" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Employee Name" />
+
+    <EditText
+        android:id="@+id/etPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Position" />
+
+    <EditText
+        android:id="@+id/etDepartment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Department" />
+
+    <Button
+        android:id="@+id/btnAddEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Employee" />
+
+    <Button
+        android:id="@+id/btnUpdateEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Employee" />
+
+    <Button
+        android:id="@+id/btnDeleteEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Employee" />
+
+    <Button
+        android:id="@+id/btnViewEmployees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Employees" />
+
+    <TextView
+        android:id="@+id/tvResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Results will appear here"
+        android:textSize="16sp" />
+</LinearLayout>
+
+java code:MainActivity.java
+package com.example.employeedatabase;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etEmployeeId, etName, etPosition, etDepartment;
+    private Button btnAddEmployee, btnUpdateEmployee, btnDeleteEmployee, btnViewEmployees;
+    private TextView tvResults;
+
+    private FirebaseFirestore db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize Firebase Firestore
+        db = FirebaseFirestore.getInstance();
+
+        // Initialize UI components
+        etEmployeeId = findViewById(R.id.etEmployeeId);
+        etName = findViewById(R.id.etName);
+        etPosition = findViewById(R.id.etPosition);
+        etDepartment = findViewById(R.id.etDepartment);
+        btnAddEmployee = findViewById(R.id.btnAddEmployee);
+        btnUpdateEmployee = findViewById(R.id.btnUpdateEmployee);
+        btnDeleteEmployee = findViewById(R.id.btnDeleteEmployee);
+        btnViewEmployees = findViewById(R.id.btnViewEmployees);
+        tvResults = findViewById(R.id.tvResults);
+
+        // Set click listeners for buttons
+        btnAddEmployee.setOnClickListener(v -> addEmployee());
+        btnUpdateEmployee.setOnClickListener(v -> updateEmployee());
+        btnDeleteEmployee.setOnClickListener(v -> deleteEmployee());
+        btnViewEmployees.setOnClickListener(v -> viewEmployees());
+    }
+
+    private void addEmployee() {
+        String employeeId = etEmployeeId.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+        String position = etPosition.getText().toString().trim();
+        String department = etDepartment.getText().toString().trim();
+
+        // Create a new employee object
+        Employee employee = new Employee(employeeId, name, position, department);
+
+        // Add employee to Firestore
+        db.collection("employees")
+                .document(employeeId) // Use employeeId as the document ID
+                .set(employee)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(MainActivity.this, "Employee added successfully!", Toast.LENGTH_SHORT).show();
+                    clearFields();
+                })
+                .addOnFailureListener(e -> Log.w("MainActivity", "Error adding document", e));
+    }
+
+    private void updateEmployee() {
+        String employeeId = etEmployeeId.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+        String position = etPosition.getText().toString().trim();
+        String department = etDepartment.getText().toString().trim();
+
+        // Create a map of updated values
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", name);
+        updates.put("position", position);
+        updates.put("department", department);
+
+        // Update employee in Firestore
+        db.collection("employees")
+                .document(employeeId)
+                .update(updates)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(MainActivity.this, "Employee updated successfully!", Toast.LENGTH_SHORT).show();
+                    clearFields();
+                })
+                .addOnFailureListener(e -> Log.w("MainActivity", "Error updating document", e));
+    }
+
+    private void deleteEmployee() {
+        String employeeId = etEmployeeId.getText().toString().trim();
+
+        // Delete employee from Firestore
+        db.collection("employees")
+                .document(employeeId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(MainActivity.this, "Employee deleted successfully!", Toast.LENGTH_SHORT).show();
+                    clearFields();
+                })
+                .addOnFailureListener(e -> Log.w("MainActivity", "Error deleting document", e));
+    }
+
+    private void viewEmployees() {
+        // Retrieve all employees from Firestore
+        db.collection("employees")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        StringBuilder results = new StringBuilder();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Employee employee = document.toObject(Employee.class);
+                            results.append("ID: ").append(employee.getEmployeeId()).append("\n");
+                            results.append("Name: ").append(employee.getName()).append("\n");
+                            results.append("Position: ").append(employee.getPosition()).append("\n");
+                            results.append("Department: ").append(employee.getDepartment()).append("\n\n");
+                        }
+                        tvResults.setText(results.toString());
+                    } else {
+                        Log.w("MainActivity", "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void clearFields() {
+        etEmployeeId.setText("");
+        etName.setText("");
+        etPosition.setText("");
+        etDepartment.setText("");
+    }
+}
+
+Q20.Write android code to turn ON/OFF Bluetooth
+
+xml code:AndroidManifest.xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bluetoothcontrol">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnTurnOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn ON Bluetooth" />
+
+    <Button
+        android:id="@+id/btnTurnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn OFF Bluetooth" />
+</LinearLayout>
+
+java code:
+package com.example.bluetoothcontrol;
+
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private BluetoothAdapter bluetoothAdapter;
+    private Button btnTurnOn, btnTurnOff;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Get the BluetoothAdapter
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        btnTurnOn = findViewById(R.id.btnTurnOn);
+        btnTurnOff = findViewById(R.id.btnTurnOff);
+
+        // Set OnClickListener for the Turn ON button
+        btnTurnOn.setOnClickListener(v -> turnOnBluetooth());
+
+        // Set OnClickListener for the Turn OFF button
+        btnTurnOff.setOnClickListener(v -> turnOffBluetooth());
+    }
+
+    private void turnOnBluetooth() {
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 1);
+        } else {
+            Toast.makeText(this, "Bluetooth is already ON", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void turnOffBluetooth() {
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (bluetoothAdapter.isEnabled()) {
+            bluetoothAdapter.disable();
+            Toast.makeText(this, "Bluetooth is turned OFF", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Bluetooth is already OFF", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+
+Q21.Create an App for Notification to display “Internal Storage is Full, Delete some
+files”
+
+xml code:AndroidManifest.xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.storagenotificationapp">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Storage Notification App"
+        android:textSize="24sp"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnCheckStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Storage" />
+</LinearLayout>
+
+java code:MainActivity.java
+package com.example.storagenotificationapp;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String CHANNEL_ID = "storage_notification_channel";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button btnCheckStorage = findViewById(R.id.btnCheckStorage);
+        btnCheckStorage.setOnClickListener(v -> checkStorage());
+    }
+
+    private void checkStorage() {
+        // Get the available internal storage space
+        File internalStorage = Environment.getDataDirectory();
+        long freeSpace = internalStorage.getFreeSpace();
+        long totalSpace = internalStorage.getTotalSpace();
+
+        // Check if the available space is less than a certain threshold (e.g., 10 MB)
+        long threshold = 10 * 1024 * 1024; // 10 MB
+        if (freeSpace < threshold) {
+            showNotification();
+        } else {
+            Toast.makeText(this, "Storage space is sufficient", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showNotification() {
+        // Create a notification manager
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Create notification channel for Android O and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Storage Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Create an intent for the notification
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Build the notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentTitle("Storage Alert")
+                .setContentText("Internal Storage is Full, Delete some files")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        // Show the notification
+        notificationManager.notify(1, builder.build());
+    }
+}
+
+Q22.Read and write JSON data from created file
+
+build.gradle:
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+java code:User.java
+package com.example.jsonfileapp;
+
+public class User {
+    private String name;
+    private int age;
+
+    // Constructor
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+java code:MainActivity.java
+package com.example.jsonfileapp;
+
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String FILE_NAME = "user_data.json";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button btnWrite = findViewById(R.id.btnWrite);
+        Button btnRead = findViewById(R.id.btnRead);
+
+        // Write user data to file
+        btnWrite.setOnClickListener(v -> {
+            User user = new User("John Doe", 25);
+            writeJsonToFile(user);
+        });
+
+        // Read user data from file
+        btnRead.setOnClickListener(v -> readJsonFromFile());
+    }
+
+    private void writeJsonToFile(User user) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(user);
+
+        File file = new File(getExternalFilesDir(null), FILE_NAME);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(json);
+            Toast.makeText(this, "Data written to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error writing to file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void readJsonFromFile() {
+        File file = new File(getExternalFilesDir(null), FILE_NAME);
+        if (!file.exists()) {
+            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            Gson gson = new Gson();
+            User user = gson.fromJson(reader, User.class);
+            Toast.makeText(this, "Name: " + user.getName() + ", Age: " + user.getAge(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error reading from file", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+
+xml code:activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Write JSON to File" />
+
+    <Button
+        android:id="@+id/btnRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read JSON from File" />
+</LinearLayout>
+
+Q23.Using flutter, open a browser using Android SDK
+
+program:
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Open Browser Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  // Function to launch the URL
+  void _launchURL() async {
+    const url = 'https://www.google.com'; // URL to be opened
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Open Browser Example'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: _launchURL,
+          child: Text('Open Google in Browser'),
+        ),
+      ),
+    );
+  }
+}
+
+Q24.Using Flutter design app for registration form screen to attend webinar
+
+program:
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(WebinarRegistrationApp());
+}
+
+class WebinarRegistrationApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Webinar Registration',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: RegistrationScreen(),
+    );
+  }
+}
+
+class RegistrationScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Register for Webinar'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Full Name',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Handle the registration logic
+                    String name = nameController.text;
+                    String email = emailController.text;
+                    String phone = phoneController.text;
+                    
+                    // Here you can send the data to your backend or show a confirmation dialog
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Registered successfully for webinar!')),
+                    );
+                  }
+                },
+                child: Text('Register'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Q25.Write react native app to display alert dialog box for SMS with button.
+
+Pprogram:
+import React from 'react';
+import { StyleSheet, View, Button, Alert } from 'react-native';
+
+const App = () => {
+  const showAlert = () => {
+    Alert.alert(
+      "Send SMS",
+      "Do you want to send an SMS?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Send", onPress: () => console.log("Send SMS") }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Send SMS" onPress={showAlert} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+});
+
+export default App;
+
+Q26. Create app for ToDo list using React Native
+
+program:
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, TouchableOpacity, Alert } from 'react-native';
+
+const App = () => {
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = () => {
+    if (!task.trim()) {
+      Alert.alert('Error', 'Please enter a task');
+      return;
+    }
+    setTasks([...tasks, { id: Math.random().toString(), value: task }]);
+    setTask('');
+  };
+
+  const deleteTask = (taskId) => {
+    setTasks(tasks.filter((t) => t.id !== taskId));
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Add a new task"
+        value={task}
+        onChangeText={setTask}
+      />
+      <Button title="Add Task" onPress={addTask} />
+      <FlatList
+        data={tasks}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => deleteTask(item.id)}>
+            <View style={styles.taskItem}>
+              <Text style={styles.taskText}>{item.value}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  taskItem: {
+    padding: 15,
+    backgroundColor: '#fff',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+  },
+  taskText: {
+    fontSize: 18,
+  },
+});
+
+export default App;
+
+
+
